@@ -1,5 +1,5 @@
 -- Reading the input file
-f = io.open("smallPuzzle.txt")
+f = io.open("puzzle.txt")
 line = f:read("*line")
 input = {}
 for w in line:gmatch(".") do
@@ -66,53 +66,58 @@ print(checksum(decalage(parse(input))))
 -- Part 2
 --
 
-function findEmptySpace(n,table)
-    for i,e in ipairs(table) do
-        if e == "." then
-            size = 0
-            diff = 0
-            while table[diff+i] == "." do
-                size = size+1
-                if size == n then
-                    return i
-                end
-                diff = diff+1
-            end
-        end
+function findEmptySpace(n,table, thresh)
+    substring = ""
+    for i=1,n do
+        substring = substring.."%."
     end
-    return nil
+    tabled = stringify(table)
+    startindex = string.find(tabled, substring)
+    if startindex and startindex < thresh then return startindex else return nil end
 end
 
 function fullBlock(table,i,j)
     offset = 0
-    id = table[i]
-    while table[i+offset] and table[i+offset] == id do
+    id = table[j]
+    while j+offset <= #table and table[j+offset] == id do
         table[i+offset],table[j+offset] = table[j+offset],table[i+offset]
         offset = offset +1
     end
     return table
 end
 
+function stringify(table)
+    res = ""
+    for _,e in ipairs(table) do
+        if e == "." then
+            res = res..e
+        else
+            res = res.."_"
+        end
+    end
+    return res
+end
+
 function decalagev2(full)
     last = #full
     size = 0
     while last > 1 do
-        for _,e in pairs(full) do
-            io.write(e.." ")
-        end
-        print()
         if full[last] ~= "." then
             curr = full[last]
             size = 0
-            while full[last] == curr do
+            while full[last] == curr and full[last] do
                 last = last-1
                 size = size+1
             end
+            emptySpace = findEmptySpace(size,full, last+1)
+            if emptySpace then
+                fullBlock(full,emptySpace,last+1)
+            end
+        else
+            last = last-1
         end
-        emptySpace = findEmptySpace(size-1,full)
-        if emptySpace then fullBlock(full,emptySpace,last+1) end
-        last = last-1
     end
     return full
 end
-decalagev2(parse(input))
+
+print(checksum(decalagev2(parse(input))))
