@@ -49,7 +49,7 @@ for i,sub in ipairs(data) do
 		end
 	end
 end
---print(xmases)
+print(xmases)
 
 --
 -- Part 2
