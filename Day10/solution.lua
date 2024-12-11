@@ -3,7 +3,6 @@ f = io.open("smallPuzzle.txt")
 input = {}
 line = f:read("*line")
 
-<<<<<<< HEAD
 while line do
     l = {}
     for c in line:gmatch(".") do
