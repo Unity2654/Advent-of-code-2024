@@ -1,8 +1,9 @@
--- Reading the input file
+-- Parsing the input file
 f = io.open("smallPuzzle.txt")
 input = {}
 line = f:read("*line")
 
+<<<<<<< HEAD
 while line do
     l = {}
     for c in line:gmatch(".") do
@@ -19,7 +20,6 @@ end
 --
 -- Part 1
 --
-
 -- Finding trailheads
 trailheads = {}
 
@@ -67,7 +67,6 @@ for _,th in ipairs(trailheads) do
     res = res + trail(th[1],th[2])
 end
 print(res)
-
 
 --
 -- Part 2
