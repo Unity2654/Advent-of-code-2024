@@ -70,4 +70,32 @@ end
 exec(instructions)
 print()
 
+function normalProgram(A,B,C,comp)
+    iter=1
+    while A>0 do
+        B=A%8
+        B=B~7
+        C=A>>B
+        A=A>>3
+        B=B~C
+        B=B~7
+        if(B%8~=comp[iter]) then return nil end
+        iter = iter+1
+    end
+    return true
+end
+
+function ci(n)
+    i=0
+    while true do
+        if (((i%8)~7)~(i>>((i%8)))~7) == n then
+            return i
+        end
+        i = i+1
+    end
+end
+
+for i=8^15,8^16 do
+    if normalProgram(i,0,0,{2,4,1,7,7,5,0,3,4,0,1,7,5,5,3,0}) then print(i) end
+end
 
