@@ -115,29 +115,6 @@ function fa:accept(word)
     return false
 end
 
-function fa:DFS(word)
-    local possiblePaths = {{self.initial,word}}
-    local index = 1
-    local count = 0
-    while index <= #possiblePaths do
-        local curr,w = possiblePaths[index][1],possiblePaths[index][2]
-        index = index+1
-        for i=1,#w do
-            curr = self:transition(curr,string.sub(w,i,i))
-            if not curr then goto restart end
-            for j,state in ipairs(curr) do
-                if state~=curr[1] then table.insert(possiblePaths,{state,string.sub(w,i+1,#w)}) end
-            end
-            curr = curr[1]
-        end
-        if self.states[curr] then
-            count = count+1
-        end
-        ::restart::
-    end
-    return count
-end
-
 function fa:prettyPrint()
     io.write("Initial state : ")
     print(self.initial)
