@@ -71,7 +71,6 @@ exec(instructions)
 print()
 
 function normalProgram(A,B,C,comp)
-    iter=1
     while A>0 do
         B=A%8
         B=B~7
@@ -79,10 +78,8 @@ function normalProgram(A,B,C,comp)
         A=A>>3
         B=B~C
         B=B~7
-        if(B%8~=comp[iter]) then return nil end
-        iter = iter+1
+        io.write(B%8)
     end
-    return true
 end
 
 function ci(n)
@@ -95,7 +92,16 @@ function ci(n)
     end
 end
 
-for i=8^15,8^16 do
-    if normalProgram(i,0,0,{2,4,1,7,7,5,0,3,4,0,1,7,5,5,3,0}) then print(i) end
+function nNumbers(n)
+    for i=8^(n-1),8^(n)-1 do
+        io.write(math.floor(i)..": ")
+        normalProgram(i,0,0)
+        print()
+    end
 end
+
+nNumbers(1)
+
+normalProgram(2711734577143437)
+print()
 
